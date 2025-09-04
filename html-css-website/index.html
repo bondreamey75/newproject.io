@@ -90,7 +90,12 @@
             </div>
 
             <!-- Inspirational Quote -->
-            <div id="quote" style="font-style: italic; margin-top: 20px;"></div>
+            <div class="quote-box">
+    <h2>🌱 Daily Inspiration</h2>
+    <p id="quote">Loading...</p>
+    <p><strong id="author"></strong></p>
+    <button onclick="getQuote()">New Quote</button>
+  </div>
 
             <!-- Footer -->
             <footer class="footer">
@@ -116,6 +121,20 @@
     </div>
 
     <script src="script.js"></script>
-    <script src="daily-quote.js"></script>
+    <script>
+    async function getQuote() {
+      try {
+        let response = await fetch("https://zenquotes.io/api/random");
+        let data = await response.json();
+        document.getElementById("quote").innerText = `"${data[0].q}"`;
+        document.getElementById("author").innerText = `– ${data[0].a}`;
+      } catch (error) {
+        document.getElementById("quote").innerText = "Could not load a quote right now.";
+      }
+    }
+
+    // Load a quote when the page starts
+    getQuote();
+  </script>
 </body>
 </html>
